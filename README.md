@@ -42,3 +42,4 @@ The application must have the following endpoints:
 * Troubleshooting: <https://stackoverflow.com/>
 * Spring Boot: <https://spring.io/projects/spring-boot>
 * React course (Brad Traversy): <https://www.youtube.com/watch?v=w7ejDZ8SWv8>
+* Git Ignore generator:<https://www.toptal.com/developers/gitignore>
