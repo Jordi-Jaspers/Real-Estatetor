@@ -4,14 +4,56 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.section {
+  @apply bg-gray-100 h-full md:h-screen w-full;
+}
+
+.image-container {
+  @apply container mx-auto px-0 md:px-4 py-4;
+}
+
+.layout {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-4;
+}
+
+/* @src/components/Slider.css */
+
+.slider {
+  @apply relative h-full flex justify-center items-center;
+}
+
+.latest-listing {
+  @apply rounded-xl h-48 w-full object-cover;
+}
+
+.right-arrow {
+  @apply absolute top-1/2 right-32 text-5xl text-yellow-500 z-10 cursor-pointer select-none;
+}
+
+.left-arrow {
+  @apply absolute top-1/2 left-32 text-5xl text-yellow-500 z-10 cursor-pointer select-none;
+}
+
+.slide {
+  @apply opacity-0 duration-1000 ease-in-out;
+}
+
+.slide.active {
+  @apply opacity-100 duration-1000 scale-105;
+}
+
+.wrapper-slider {
+  @apply overflow-hidden rounded-xl shadow-gray-300 shadow-sm flex flex-col justify-between cursor-pointer duration-200 ease-in;
 }
