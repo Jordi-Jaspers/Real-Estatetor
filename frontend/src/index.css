@@ -16,6 +16,17 @@ code {
     monospace;
 }
 
+h1,
+h2,
+h3,
+h4,
+p,
+a {
+  font-family: "Nunito Sans", nunito-serif;
+}
+
+/* CONTENT */
+
 .section {
   @apply bg-gray-100 h-full md:h-screen w-full;
 }
@@ -28,32 +39,61 @@ code {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-4;
 }
 
-/* @src/components/Slider.css */
-
-.slider {
-  @apply relative h-full flex justify-center items-center;
-}
-
-.latest-listing {
-  @apply rounded-xl h-48 w-full object-cover;
-}
-
 .right-arrow {
-  @apply absolute top-1/2 right-32 text-5xl text-yellow-500 z-10 cursor-pointer select-none;
+  @apply hidden md:block opacity-75 hover:opacity-100 absolute top-1/2 right-8 text-5xl text-yellow-500 z-10 cursor-pointer select-none;
 }
 
 .left-arrow {
-  @apply absolute top-1/2 left-32 text-5xl text-yellow-500 z-10 cursor-pointer select-none;
+  @apply hidden md:block opacity-75 hover:opacity-100 absolute top-1/2 left-8 text-5xl text-yellow-500 z-10 cursor-pointer select-none;
+}
+
+.slide img {
+  @apply m-auto rounded-lg;
 }
 
 .slide {
-  @apply opacity-0 duration-1000 ease-in-out;
+  @apply invisible md:visible scale-50 transform duration-300 opacity-50 shadow-lg rounded-lg border border-solid border-gray-400;
 }
 
-.slide.active {
-  @apply opacity-100 duration-1000 scale-105;
+.active-slide {
+  @apply visible scale-100 hover:scale-105 opacity-100 md:p-5 md:my-10 my-5 p-2;
 }
 
-.wrapper-slider {
-  @apply overflow-hidden rounded-xl shadow-gray-300 shadow-sm flex flex-col justify-between cursor-pointer duration-200 ease-in;
+.listing-content {
+  @apply pb-20 w-screen md:h-screen;
+  /* min-height: 47rem */
+}
+
+.listing-description {
+  @apply md:block hidden text-gray-400 px-3;
+}
+
+/* FOOTER */
+
+.footer {
+  @apply bg-black text-white;
+}
+
+.footer-content {
+  @apply grid md:grid-cols-2 md:columns-2 m-5 md:gap-0 py-5;
+}
+
+.copyright {
+  @apply bottom-0 flex justify-center items-center h-16 flex-col md:px-0 md:border-0 px-5 border-t-2 border-gray-300;
+}
+
+.contact-form {
+  @apply flex flex-col items-start justify-center;
+}
+
+.contact-information {
+  @apply flex flex-col items-start justify-center;
+}
+
+.social {
+  @apply flex flex-row gap-5 pb-5;
+}
+
+.privacy-policy {
+  @apply self-center text-center md:self-start md:text-left;
 }
