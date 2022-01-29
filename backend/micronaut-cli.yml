@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.realestatetor
+testFramework: spock
+sourceLanguage: java
+buildTool: gradle_kotlin
+features: [annotation-api, app-name, gradle, h2, hibernate-jpa, http-client, jackson-databind, java, java-application, jdbc-hikari, micronaut-build, netty-server, readme, serialization-jackson, shade, slf4j-simple, spock, yaml]

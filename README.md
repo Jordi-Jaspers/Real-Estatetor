@@ -1,9 +1,9 @@
-<h3 align="center">Spring Webflux Course</h3>
+<h3 align="center">Real-Estatetor</h3>
 
 <div align="center">
 
   [![Status](https://img.shields.io/badge/status-active-success.svg)]() 
-  [![GitHub Issues](https://img.shields.io/github/issues/JJordi-Jaspers/Real-Estatetor.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
+  [![GitHub Issues](https://img.shields.io/github/issues/Jordi-Jaspers/Real-Estatetor.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
   [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Jordi-Jaspers/Real-Estatetor.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
@@ -18,11 +18,12 @@ Jordi Jaspers [[Github](https://github.com/Jordi-Jaspers "Github Page"), [Linked
 **Date of initial commit:** 24/01/2022
 
 **Description:**  
-A simple Real-estate website GUI made in React and tailwind CSS. This will provide as the foundation for the real estate transaction that are going to be build on top of this website.
+A simple Real-estate website GUI made in React and tailwind CSS. This will provide as the foundation for solidity and micronaut experiments.
 ---
 
 ## 📝 Table of Contents
 - [Application](#application)
+- [Notes](#notes)
 - [Stack](#stack)
 - [References](#references)
 
@@ -31,9 +32,41 @@ The application must have the following endpoints:
 
 ...
 
+## Notes <a name = "notes"></a>
+* Hawaii framework depends on Spring MVC dependencies, which will pull spring framework dependencies. Not very effecient for micronaut's native image support via graalVM.
+
+```groovy
+    // ======= HAWAII FRAMEWORK =======
+
+    // contains the autoconfiguration for Hawaii logging.
+    implementation(group = "org.hawaiiframework", name = "hawaii-starter-logging", version = "3.0.0.M24")
+
+    // provides the core of hawaii framework such as the response entity exception handling.
+    implementation("org.hawaiiframework", name = "hawaii-core", version = "3.0.0.M24")
+
+    // provides an async framework which enables us to control query and rest endpoints timeouts.
+    implementation("org.hawaiiframework", name = "hawaii-async", version = "3.0.0.M24")
+
+    // contains the autoconfiguration of the exception mapping to http error codes. Also provides for JSON-org dependency.
+    implementation(group = "org.hawaiiframework", name = "hawaii-starter-rest", version = "3.0.0.M24")
+
+    // Provides basic Spring MVC capabilities, and is necessary for hawaii-framework.
+    // To indicate this is a web/rest application, but do not load tomcat, we will replace it with Jetty later
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-web", version = "2.6.2") {
+        exclude(group = "org.springframework.boot", module = "spring-boot-starter-tomcat")
+    }
+
+    // JCL 1.2 implemented over SLF4J
+    // https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j
+    implementation("org.slf4j:jcl-over-slf4j:1.7.35")
+```
+
+* Java version 'sdk install java  22.0.0.2.r17-grl' needs to be installed. sdkman
+* setup IDE config to gradle jdk 17-grl -> prefences -> build, execution, and deployment -> build tools -> gradle -> jdk
+* set project structure to jdk 17-grl
+
 ## ⛏️ Stack <a name = "stack"></a>
-- [Spring Boot](https://spring.io/projects/spring-boot) - Backend Framework
-- [Spring WebFlux](https://spring.io/projects/spring-webflux) - Reactive Framework
+- [Micronaut](https://micronaut.io/) - Microservices framework for Spring Boot
 - [Git](https://git-scm.com/) - Version Control
 - [Solidity](https://soliditylang.org/) - Ethereum Smart Contract
 - [React](https://reactjs.org/) - Frontend Framework

@@ -1,0 +1,22 @@
+# ====== MICRONAUT CONFIG ======
+micronaut:
+  application:
+    name: backend
+
+# ====== DATABASE CONFIG ======
+r2dbc:
+  datasources:
+    default:
+      url: r2dbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: ''
+jpa.default.properties.hibernate.hbm2ddl.auto: update
+
+netty:
+  default:
+    allocator:
+      max-order: 3
+
+# ====== LOGGING CONFIG ======
+logging:
+  config: config/${LOGBACK_CONFIG:logback-spring.xml}
