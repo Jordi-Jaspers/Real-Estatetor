@@ -80,3 +80,5 @@ The application must have the following endpoints:
 * Reactive DB Micronaut: <https://medium.com/javarevisited/reactive-database-access-with-r2dbc-micronaut-and-graalvm-ee9b5853260>
 * GraalVM: <https://www.graalvm.org/>
 * Solidity Docs: <https://solidity.readthedocs.io/en/develop/getting-started.html>
+* Heroicons (icon resource): <https://heroicons.com/>
+* Unsplash (image Resource): <https://unsplash.com/>
