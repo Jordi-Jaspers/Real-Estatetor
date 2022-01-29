@@ -76,3 +76,7 @@ The application must have the following endpoints:
 * Spring Boot: <https://spring.io/projects/spring-boot>
 * React course (Brad Traversy): <https://www.youtube.com/watch?v=w7ejDZ8SWv8>
 * Git Ignore generator:<https://www.toptal.com/developers/gitignore>
+* Micronaut Docs: <https://micronaut.io/docs/>
+* Reactive DB Micronaut: <https://medium.com/javarevisited/reactive-database-access-with-r2dbc-micronaut-and-graalvm-ee9b5853260>
+* GraalVM: <https://www.graalvm.org/>
+* Solidity Docs: <https://solidity.readthedocs.io/en/develop/getting-started.html>
