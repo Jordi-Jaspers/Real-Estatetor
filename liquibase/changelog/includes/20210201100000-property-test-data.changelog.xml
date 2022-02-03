@@ -3,34 +3,29 @@
                    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
-    <changeSet id="20210201090000-property-data-structure-1" author="jordi.jaspers">
+    <changeSet id="20210201100000-property-test-data-1" author="jordi.jaspers">
         <ext:documentation>
-            Property data structure
+            Test data for the property table.
         </ext:documentation>
         <sql>
-            CREATE TABLE address
-            (
-                id       INTEGER      NOT NULL,
-                country  VARCHAR(255) NOT NULL,
-                city     VARCHAR(255) NOT NULL,
-                zip_code VARCHAR(255) NOT NULL,
-                street   VARCHAR(255) NOT NULL,
-                number   VARCHAR(255) NOT NULL,
-                PRIMARY KEY (id)
-            )
+            INSERT INTO address (country, city, zip_code, street, number)
+            VALUES ('Netherlands', 'Nijmegen', '6537 GP', 'Meijhorst', '127'),
+                   ('Netherlands', 'Almelo', '7604 CG', 'Aalderinkshof', '138'),
+                   ('Netherlands', 'Ridderkerk', '2987 BG', 'Boezemstraat', '176'),
+                   ('Netherlands', 'Den Haag', '2512 CA', 'Raamstraat', '45'),
+                   ('Netherlands', 'Utrecht', '3815 DE', 'Zangvogelweg', '26');
 
-            CREATE TABLE property
-            (
-                id                 INTEGER        NOT NULL,
-                property_type      VARCHAR(255)   NOT NULL,
-                description        VARCHAR        NOT NULL,
-                price              DECIMAL(10, 2) NOT NULL,
-                address_id         INTEGER        NOT NULL,
-                advertisement_type VARCHAR(255)   NOT NULL,
-                image              VARCHAR(255)   NOT NULL,
-                PRIMARY KEY (id),
-                FOREIGN KEY (address_id) REFERENCES address (id)
-            );
+            INSERT INTO property (property_type, description, price, address_id, advertisement_type, image)
+            VALUES ('Apartment', 'Beautiful apartment in the center of the city', 200000.00, 1, 'SALE',
+                    'https://images.unsplash.com/photo-1534239697798-120952b76f2b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTd8fGFwYXJ0ZW1lbnQlMjBidWlsZGluZ3xlbnwwfHwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60'),
+                   ('Detached', 'Just another big house that nobody can afford, you could say it is priceless.', 1000000.00, 2, 'SALE',
+                    'https://images.unsplash.com/photo-1591170715502-fbc32adc4f52?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZGV0YWNoZWQlMjBob3VzZXxlbnwwfHwwfHw%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60'),
+                   ('Semi-detached', 'Classic dutch house located in a quiet and safe village', 376000.00, 3, 'SALE',
+                    'https://images.unsplash.com/photo-1505819244306-ef53954f9648?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzB8fHNlbWklMjBkZXRhY2hlZCUyMGhvdXNlfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60'),
+                   ('Room', 'Very modern room in the vicinity of the university.', 780, 4, 'RENT',
+                    'https://images.unsplash.com/photo-1612320428376-4096809118b5?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXBhcnRlbWVudCUyMHJvb218ZW58MHx8MHx8&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60'),
+                   ('Land', 'A great piece of land near the city', 75000.00, 5, 'SALE',
+                    'https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZmFybSUyMGxhbmR8ZW58MHx8MHx8&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60');
         </sql>
     </changeSet>
 </databaseChangeLog>
