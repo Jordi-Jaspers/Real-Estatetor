@@ -7,9 +7,9 @@ micronaut:
 r2dbc:
   datasources:
     default:
-      url: r2dbc:postgresql://localhost:5432/postgres
-      username: postgres
-      password: ''
+      url: r2dbc:postgresql://localhost:5432/real-estatetor
+      username: ${POSTGRES_USERNAME:jordi}
+      password: ${POSTGRES_PASSWORD:postgrespwd}
 jpa.default.properties.hibernate.hbm2ddl.auto: update
 
 netty:
@@ -18,5 +18,3 @@ netty:
       max-order: 3
 
 # ====== LOGGING CONFIG ======
-logging:
-  config: config/${LOGBACK_CONFIG:logback-spring.xml}

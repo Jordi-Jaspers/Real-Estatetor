@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="20210201090000-property-data-structure-1" author="jordi.jaspers">
+        <ext:documentation>
+            Property data structure
+        </ext:documentation>
+        <sql>
+            CREATE TABLE address
+            (
+                id       INTEGER      NOT NULL,
+                country  VARCHAR(255) NOT NULL,
+                city     VARCHAR(255) NOT NULL,
+                zip_code VARCHAR(255) NOT NULL,
+                street   VARCHAR(255) NOT NULL,
+                number   VARCHAR(255) NOT NULL,
+                PRIMARY KEY (id)
+            )
+
+            CREATE TABLE property
+            (
+                id                 INTEGER        NOT NULL,
+                property_type      VARCHAR(255)   NOT NULL,
+                description        VARCHAR        NOT NULL,
+                price              DECIMAL(10, 2) NOT NULL,
+                address_id         INTEGER        NOT NULL,
+                advertisement_type VARCHAR(255)   NOT NULL,
+                image              VARCHAR(255)   NOT NULL,
+                PRIMARY KEY (id),
+                FOREIGN KEY (address_id) REFERENCES address (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

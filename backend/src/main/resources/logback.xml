@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration info="true" scan="true" scanPeriod="10 seconds" >
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level)[%blue(Tx_type:%X{tx_type} Tx_id:%X{tx_id}) %red(task_id:%X{task_id})] %cyan(%logger:%line) - \n%msg%n\n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="reactor.netty.http.client.HttpClient" level="INFO"/>
+    <logger name="redis.clients.jedis" level="INFO"/>
+    <logger name="com.realestatetor" level="INFO"/>
+    <logger name="io.micronaut.beans" level="TRACE"/>
+    <logger name="io.micronaut.web" level="TRACE"/>
+    <logger name="io.micronaut.security" level="TRACE"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

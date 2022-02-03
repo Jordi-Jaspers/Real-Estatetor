@@ -64,6 +64,10 @@ The application must have the following endpoints:
 * Java version 'sdk install java  22.0.0.2.r17-grl' needs to be installed. sdkman
 * setup IDE config to gradle jdk 17-grl -> prefences -> build, execution, and deployment -> build tools -> gradle -> jdk
 * set project structure to jdk 17-grl
+* Small community, debugging is harder.
+* Quarkus has no groovy support and is also slower then Micronaut.
+* Security is not an out of the box feature like in spring boot.
+* 
 
 ## ⛏️ Stack <a name = "stack"></a>
 - [Micronaut](https://micronaut.io/) - Microservices framework for Spring Boot

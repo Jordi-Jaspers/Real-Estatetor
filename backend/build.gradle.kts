@@ -108,6 +108,10 @@ dependencies {
     // Reactive Database protocol
     runtimeOnly(group = "io.r2dbc", name = "r2dbc-postgresql")
 
+    // Enable the logback appender.
+//    runtimeOnly(group = "ch.qos.logback", name = "logback-classic")
+    runtimeOnly("ch.qos.logback:logback-classic")
+
     // ======= ANNOTATION PROCESSORS =======
 
     // Provides Micronaut's specific annotations.
@@ -136,9 +140,6 @@ dependencies {
 
     // mapstruct is used to generate code to map from domain model classes to rest application model classes
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.4.2.Final")
-
-    // Logstash encoder for logging in JSON format
-    implementation(group = "net.logstash.logback", name = "logstash-logback-encoder", version = "6.3")
 
     // Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients.
     implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.15")
