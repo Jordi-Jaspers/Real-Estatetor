@@ -27,7 +27,11 @@
                 address_id         INTEGER        NOT NULL,
                 advertisement_type VARCHAR(255)   NOT NULL,
                 image              VARCHAR(255)   NOT NULL,
-                FOREIGN KEY (address_id) REFERENCES address (id)
+                created_at         TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at         TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT fk_property_address
+                    FOREIGN KEY(address_id)
+                        REFERENCES address(id)
             );
         </sql>
     </changeSet>

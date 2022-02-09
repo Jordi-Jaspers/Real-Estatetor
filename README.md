@@ -86,3 +86,4 @@ The application must have the following endpoints:
 * Solidity Docs: <https://solidity.readthedocs.io/en/develop/getting-started.html>
 * Heroicons (icon resource): <https://heroicons.com/>
 * Unsplash (image Resource): <https://unsplash.com/>
+* Micronaut R2DBC guide: <https://micronaut-projects.github.io/micronaut-r2dbc/1.0.x/guide/>

@@ -103,23 +103,32 @@ dependencies {
     // This brings in the SuppressFBWarnings
     compileOnly(group = "com.github.spotbugs", name = "spotbugs-annotations", version = "4.3.0")
 
+    // Lombock needs to be configured before all the Micronaut dependencies.
+    compileOnly(group = "org.projectlombok", name = "lombok")
+
     // ======= RUNTIME ONLY DEPENDENCIES =======
 
     // Reactive Database protocol
     runtimeOnly(group = "io.r2dbc", name = "r2dbc-postgresql")
 
     // Enable the logback appender.
-//    runtimeOnly(group = "ch.qos.logback", name = "logback-classic")
-    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly(group = "ch.qos.logback", name = "logback-classic")
 
     // ======= ANNOTATION PROCESSORS =======
 
+    // Gives us the @Data annotation for resource/model classes.
+    // Lombok must be configured before all the Micronaut dependencies.
+    // NOTE: Order of AnnotationProcessors is important.
+    annotationProcessor(group = "org.projectlombok", name = "lombok")
+
+    // mapstruct is used to generate code to map from domain model classes to rest application model classes
+    annotationProcessor(group = "org.mapstruct", name = "mapstruct-processor", version = "1.4.2.Final")
+
     // Provides Micronaut's specific annotations.
     annotationProcessor(group = "io.micronaut", name = "micronaut-http-validation")
-    annotationProcessor(group = "io.micronaut.data", name = "micronaut-data-processor")
 
-    // Provides annotations used by Mapstruct.
-    annotationProcessor(group = "org.mapstruct", name = "mapstruct-processor", version = "1.4.2.Final")
+    // Annotations for JPA and hibernate.
+    annotationProcessor(group = "io.micronaut.data", name = "micronaut-data-processor")
 
     // ======= IMPLEMENTATION DEPENDENCIES =======
 
@@ -129,17 +138,18 @@ dependencies {
     implementation(group = "io.micronaut", name = "micronaut-runtime")
     implementation(group = "io.micronaut", name = "micronaut-validation")
 
+    // Mapstruct is used to generate code to map from domain model classes to rest application model classes.
+    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.4.2.Final")
+
     // Reactive Datasource connection dependencies.
     implementation(group = "io.micronaut.r2dbc", name = "micronaut-r2dbc-core")
+    implementation(group = "io.micronaut.data", name = "micronaut-data-r2dbc")
 
     // ORM-library for Micronaut
-    implementation(group = "io.micronaut.sql", name = "micronaut-hibernate-jpa")
+    implementation(group = "io.micronaut.data", name = "micronaut-data-hibernate-jpa")
 
     // Jakarta Annotations defines a collection of annotations representing common semantic concepts that enable a declarative style of programming that applies across a variety of Java technologies.
     implementation(group = "jakarta.annotation", name = "jakarta.annotation-api")
-
-    // mapstruct is used to generate code to map from domain model classes to rest application model classes
-    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.4.2.Final")
 
     // Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients.
     implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.15")
@@ -151,12 +161,17 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation(group = "org.apache.commons", name = "commons-lang3", version = "3.12.0")
 
+    // Micronaut also uses Javax annotations
+    implementation(group = "javax.annotation", name = "javax.annotation-api")
+    implementation(group = "javax.inject", name = "javax.inject", version = "1")
+
     // ======= TEST DEPENDENCIES =======
 
-    testImplementation("org.testcontainers:postgresql")
-    testImplementation("org.testcontainers:r2dbc")
-    testImplementation("org.testcontainers:spock")
-    testImplementation("org.testcontainers:testcontainers")
+    // Test container for Micronaut
+    testImplementation(group = "org.testcontainers", name = "postgresql")
+    testImplementation(group = "org.testcontainers", name = "r2dbc")
+    testImplementation(group = "org.testcontainers", name = "spock")
+    testImplementation(group = "org.testcontainers", name = "testcontainers")
 
     // due to the dependency to spock, we also need groovy
     testImplementation(group = "org.codehaus.groovy", name = "groovy-all", version = "3.0.8")
@@ -196,7 +211,13 @@ tasks.withType<JavaCompile> {
     options.encoding = UTF_8.name()
     // add Xlint to our compiler options (but disable processing because of Spring warnings in code)
     // and make warnings be treated like errors
-    options.compilerArgs.addAll(arrayOf("-Xlint:all", "-Xlint:-processing", "-Werror"))
+    options.compilerArgs.addAll(
+        arrayOf(
+            "-parameters",
+            "--enable-preview",
+            "-Xlint:all",
+            "-Xlint:-processing",
+            "-Werror"))
 }
 
 /**

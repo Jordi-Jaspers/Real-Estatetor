@@ -1,4 +1,4 @@
-package com.realestatetor.model.resource;
+package com.realestatetor.model.entity;
 
 /**
  * Defines the type of property.
@@ -10,7 +10,7 @@ public enum PropertyType {
     VILLA("Villa"),
     APARTMENT("Apartment"),
     ROOM("Room"),
-    OTHER("Land");
+    LAND("Land");
 
     private final String value;
 
