@@ -2,9 +2,6 @@
 micronaut:
   application:
     name: backend
-  server:
-    netty:
-      log-level: INFO
 
 # ====== DATABASE CONFIG ======
 r2dbc:
@@ -19,3 +16,14 @@ netty:
   default:
     allocator:
       max-order: 3
+
+# ====== MANAGEMENT ENDPOINTS CONFIG ======
+endpoints:
+  all:
+    enabled: true
+  beans:
+    sensitive: false
+  routes:
+    sensitive: false
+  loggers:
+    sensitive: false

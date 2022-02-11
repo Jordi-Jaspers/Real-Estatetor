@@ -9,11 +9,12 @@ import io.micronaut.data.repository.reactive.ReactorCrudRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
  * The database connection with basic CRUD capabilities to the properties table.
+ *
+ * @author Jordi Jaspers
  */
 @R2dbcRepository(dialect = Dialect.POSTGRES)
 public interface PropertyRepository extends ReactorCrudRepository<Property, Long> {
@@ -26,12 +27,10 @@ public interface PropertyRepository extends ReactorCrudRepository<Property, Long
     // If you need to fetch the association too then you can use the @Join annotation on your repository interface to specify that the aggregation should be executed to with a lookup of the associated Manufacturer.
 
     @NonNull
-    @Override
     @Join("address")
     Flux<Property> findAll();
 
     @NonNull
-    @Override
     @Join("address")
     Mono<Property> findById(@NonNull @NotNull Long id);
 

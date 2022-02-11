@@ -5,8 +5,6 @@ import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
 import lombok.Data;
 
-import javax.persistence.Column;
-
 /**
  * The address resource.
  */

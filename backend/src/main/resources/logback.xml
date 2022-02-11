@@ -3,21 +3,21 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level)[%blue(Tx_type:%X{tx_type} Tx_id:%X{tx_id})
-                %red(task_id:%X{task_id})] %cyan(%logger:%line) - \n%msg%n\n
+            <pattern>
+                %cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) [%yellow(span_id:%X{span_id}) %red(Tx_id:%X{tx_id})] %cyan(%logger:%line) - \n%msg%n\n
             </pattern>
         </encoder>
     </appender>
 
     <!-- INFO -->
-    <logger name="redis.clients.jedis" level="INFO"/>
+    <logger name="redis.clients.jedis" level="DEBUG"/>
     <logger name="com.realestatetor" level="INFO"/>
 
     <!-- TRACE -->
-    <logger name="io.micronaut.beans" level="TRACE"/>
-    <logger name="io.micronaut.web" level="TRACE"/>
     <logger name="io.micronaut.security" level="TRACE"/>
-    <logger name="io.micronaut.context.condition'" level="TRACE"/>
+    <logger name="io.micronaut.web" level="DEBUG"/>
+    <logger name="io.micronaut.beans" level="INFO"/>
+    <logger name="io.micronaut.context.condition" level="INFO"/>
 
     <!-- Setting the Appender -->
     <root level="INFO">

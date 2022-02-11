@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 @Data
 @MappedEntity(value = "property")
 public class Property {
+
     /**
      * The unique identifier.
      */

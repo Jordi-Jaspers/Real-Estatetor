@@ -6,6 +6,10 @@ import org.mapstruct.ReportingPolicy;
 
 /**
  * Shared MapStruct configuration.
+ * <p>
+ * NOTE: In Micronaut, it used JSR330(aka @Inject) specification to annotate the injectable beans.
+ *
+ * @author Jordi Jaspers
  */
 @MapperConfig(
         componentModel = "jsr330",

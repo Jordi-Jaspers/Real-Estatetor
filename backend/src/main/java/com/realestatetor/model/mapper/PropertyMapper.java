@@ -1,4 +1,4 @@
-package com.realestatetor.mapper;
+package com.realestatetor.model.mapper;
 
 import com.realestatetor.config.SharedMapperConfig;
 import com.realestatetor.model.dto.PropertyDto;
@@ -7,6 +7,11 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
+/**
+ * A Bi-directional mapper for the Property.
+ *
+ * @author Jordi Jaspers
+ */
 @Mapper(config = SharedMapperConfig.class, uses = AddressMapper.class)
 public interface PropertyMapper {
 
