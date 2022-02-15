@@ -6,12 +6,15 @@ import com.realestatetor.service.exceptions.NoPropertyFoundException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.nassauframework.core.exception.BadRequestException;
+import org.nassauframework.core.logging.model.TransactionId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+
+import static org.nassauframework.core.logging.kibana.TxSupplier.withTxIdDo;
 
 /**
  * A service for the property endpoint.
@@ -43,13 +46,13 @@ public class PropertyService {
      */
     public Mono<List<Property>> getAllProperties() {
         return repository.findAll().collectList()
-                .map(properties -> {
+                .map(properties -> withTxIdDo(() -> {
                     if (properties.isEmpty()) {
                         throw new NoPropertyFoundException("There are no property entries in the repository.");
                     }
                     LOGGER.info("Requesting all properties");
                     return properties;
-                });
+                }, TransactionId.get()));
     }
 
     /**
@@ -59,14 +62,14 @@ public class PropertyService {
      * @return the property
      */
     public Mono<Property> getProperty(final long id) {
-        return repository.findById(id).map(property -> {
+        return repository.findById(id).map(property -> withTxIdDo(() -> {
             if (property == null) {
                 throw new NoPropertyFoundException("There is no property with this ID.");
             }
 
             LOGGER.info("Requesting property with id: {}", id);
             return property;
-        });
+        }, TransactionId.get()));
     }
 
     /**
@@ -82,20 +85,20 @@ public class PropertyService {
         if (upperBound != 0.00 && lowerBound > upperBound) {
             throw new BadRequestException("Did you mean to set the minimum value greater then the maximum value?");
         } else if (upperBound == 0.00) {
-            LOGGER.debug("No maximum price limit set.");
+            LOGGER.info("No maximum price limit set.");
             result = repository.findByPriceAfter(lowerBound);
         } else {
             result = repository.findByPriceAfterAndPriceBefore(lowerBound, upperBound);
         }
 
         return result.collectList()
-                .map(properties -> {
+                .map(properties -> withTxIdDo(() -> {
                     if (properties.isEmpty()) {
                         throw new NoPropertyFoundException("No property found in price range");
                     }
                     LOGGER.info("Requesting property within price range of: [{}$ - {}$]", lowerBound, upperBound);
                     return properties;
-                });
+                }, TransactionId.get()));
     }
 
     /**

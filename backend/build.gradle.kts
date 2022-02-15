@@ -130,6 +130,9 @@ dependencies {
     // Annotations for JPA and hibernate.
     annotationProcessor(group = "io.micronaut.data", name = "micronaut-data-processor")
 
+    // Aspect Oriented Programming annotations.
+    annotationProcessor(group = "io.micronaut", name = "micronaut-inject-java", version = "3.3.3")
+
     // ======= IMPLEMENTATION DEPENDENCIES =======
 
     //Necessary Micronaut dependencies

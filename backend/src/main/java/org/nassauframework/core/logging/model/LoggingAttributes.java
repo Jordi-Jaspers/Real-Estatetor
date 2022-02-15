@@ -1,0 +1,15 @@
+package org.nassauframework.core.logging.model;
+
+/**
+ * A class that holds saved logging attributes.
+ *
+ * @author Jordi Jaspers
+ */
+public class LoggingAttributes {
+
+    /**
+     * The transaction id header.
+     */
+    public static final String TX_ID_HEADER = "Nassau-Tx-Id";
+
+}

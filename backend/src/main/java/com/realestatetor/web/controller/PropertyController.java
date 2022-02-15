@@ -62,8 +62,8 @@ public class PropertyController {
      */
     @Get(PARAM_ID)
     public Mono<MutableHttpResponse<?>> getProperty(final long id) {
-        return service.getProperty(id)
-                .map(property -> HttpResponse.ok(mapper.toResourceObject(property)));
+        return service.getProperty(id).
+                map(property -> HttpResponse.ok(mapper.toResourceObject(property)));
     }
 
     /**
