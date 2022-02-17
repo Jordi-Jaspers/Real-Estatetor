@@ -257,10 +257,10 @@ pmd {
     isIgnoreFailures = false
     // directly show the failures in the output
     isConsoleOutput = true
-    // the configuration of the custom rules
-    ruleSetConfig = resources.text.fromFile(projectDir.path + "/config/pmd/pmd.xml")
     // clear the default list of rules, otherwise this will override our custom configuration.
     ruleSets = listOf<String>()
+    // the configuration of the custom rules
+    ruleSetConfig = resources.text.fromFile(projectDir.path + "/config/pmd/pmd.xml")
 }
 
 /**
@@ -271,6 +271,9 @@ spotbugs {
     val xmlFormat = (format == "xml")
     showProgress.set(true)
     excludeFilter.set(project.file("config/spotbugs/exclude.xml"))
+
+    // Ignoring spotbugs warnings for now.
+    ignoreFailures.set(true)
 
     tasks.spotbugsMain {
         reports.create("html") {
@@ -287,7 +290,6 @@ spotbugs {
         reports.create("xml") {
             isEnabled = xmlFormat
         }
-
     }
 }
 
