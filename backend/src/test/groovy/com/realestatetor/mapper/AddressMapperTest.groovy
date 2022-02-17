@@ -2,6 +2,7 @@ package com.realestatetor.mapper
 
 import com.realestatetor.model.entity.Address
 import com.realestatetor.model.mapper.AddressMapper
+import com.realestatetor.model.mapper.AddressMapperImpl
 import spock.lang.Specification
 
 class AddressMapperTest extends Specification {

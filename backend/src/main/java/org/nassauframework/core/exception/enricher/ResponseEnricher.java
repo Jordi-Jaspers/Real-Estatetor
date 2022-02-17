@@ -51,9 +51,9 @@ public class ResponseEnricher {
         result.setStatusCode(status.getCode());
         result.setStatusMessage(status.getReason());
 
-        if (throwable instanceof final ApiException apiException && result instanceof final ApiErrorResponseResource responseResource) {
-            responseResource.setApiErrorCode(apiException.getErrorCode());
-            responseResource.setApiErrorReason(apiException.getReason());
+        if (throwable instanceof ApiException && result instanceof ApiErrorResponseResource) {
+            ((ApiErrorResponseResource) result).setApiErrorCode(((ApiException) throwable).getErrorCode());
+            ((ApiErrorResponseResource) result).setApiErrorReason(((ApiException) throwable).getReason());
         }
     }
 }

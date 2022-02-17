@@ -5,7 +5,9 @@ import com.realestatetor.model.entity.AdvertisementType
 import com.realestatetor.model.entity.Property
 import com.realestatetor.model.entity.PropertyType
 import com.realestatetor.model.mapper.AddressMapper
+import com.realestatetor.model.mapper.AddressMapperImpl
 import com.realestatetor.model.mapper.PropertyMapper
+import com.realestatetor.model.mapper.PropertyMapperImpl
 import spock.lang.Specification
 
 import java.sql.Timestamp

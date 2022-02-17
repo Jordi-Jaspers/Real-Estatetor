@@ -308,6 +308,9 @@ tasks.jacocoTestReport {
     }
 }
 
+/**
+ * Configures the Native-image task.
+ */
 graalvmNative.toolchainDetection.set(false)
 micronaut {
     runtime("netty")
