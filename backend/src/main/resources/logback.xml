@@ -4,8 +4,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                %cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) [%yellow(span_id:%X{span_id})
-                %red(Tx_id:%X{tx_id})] %cyan(%logger:%line) - \n%msg%n\n
+                %cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) [%yellow(span_id:%X{span_id}) %red(Tx_id:%X{tx_id})] %cyan(%logger:%line) - \n%msg%n\n
             </pattern>
         </encoder>
     </appender>

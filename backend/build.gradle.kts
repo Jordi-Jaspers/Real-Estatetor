@@ -144,9 +144,12 @@ dependencies {
     // Creates all the management endpoint so '/metrics' or '/health' checks are available.
     implementation(group = "io.micronaut", name = "micronaut-management")
 
-    //Micronaut's security for oauth2 and jwt
-//    implementation(group = "io.micronaut.security", name = "micronaut-security-annotations")
-//    implementation(group = "io.micronaut.security", name = "micronaut-security-jwt")
+    // Micronaut's security for oauth2 and jwt
+    implementation(group = "io.micronaut.security", name = "micronaut-security-annotations")
+    implementation(group = "io.micronaut.security", name = "micronaut-security-jwt")
+
+    // Basic encryption & decryption
+    implementation(group = "commons-codec", name = "commons-codec", version = "1.15")
 
     // Mapstruct is used to generate code to map from domain model classes to rest application model classes.
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.4.2.Final")

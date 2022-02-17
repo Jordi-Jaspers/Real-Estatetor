@@ -10,6 +10,7 @@
         <option name="micronaut.processing.module" value="backend" />
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-processor/3.2.2/244979562b543ba0306e03b328a8a257239d1460/micronaut-data-processor-3.2.2.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.security/micronaut-security-annotations/3.3.0/217ab857d0da47617ac1174627f2f009af76398f/micronaut-security-annotations-3.3.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-model/3.2.2/2885424dc02d0a2df45f5b94ada221196c217988/micronaut-data-model-3.2.2.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-tx/3.2.2/cc1b029bd967a0a25a85e0341288552858063ef5/micronaut-data-tx-3.2.2.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut/micronaut-graal/3.3.0/df90460aa5dafd3940949a624be77121d36b9557/micronaut-graal-3.3.0.jar" />
@@ -43,6 +44,7 @@
         <option name="micronaut.processing.module" value="backend" />
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-processor/3.2.2/244979562b543ba0306e03b328a8a257239d1460/micronaut-data-processor-3.2.2.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.security/micronaut-security-annotations/3.3.0/217ab857d0da47617ac1174627f2f009af76398f/micronaut-security-annotations-3.3.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-model/3.2.2/2885424dc02d0a2df45f5b94ada221196c217988/micronaut-data-model-3.2.2.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-tx/3.2.2/cc1b029bd967a0a25a85e0341288552858063ef5/micronaut-data-tx-3.2.2.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut/micronaut-graal/3.3.0/df90460aa5dafd3940949a624be77121d36b9557/micronaut-graal-3.3.0.jar" />

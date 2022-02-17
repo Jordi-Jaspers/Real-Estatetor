@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="20210216100000-account-table-structure-1" author="jordi.jaspers">
+        <ext:documentation>
+            Setup the account database table for user authentication.
+        </ext:documentation>
+        <sql>
+            CREATE TABLE permission
+            (
+                id    SERIAL PRIMARY KEY,
+                level VARCHAR(255) NOT NULL
+            );
+
+            CREATE TABLE account
+            (
+                id            SERIAL PRIMARY KEY,
+                name          VARCHAR(255) NOT NULL,
+                last_name     VARCHAR(255) NOT NULL,
+                email         VARCHAR(255) NOT NULL,
+                password      VARCHAR(255) NOT NULL,
+                permission_id INTEGER      NOT NULL,
+                created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT fk_account_permission
+                    FOREIGN KEY (permission_id)
+                        REFERENCES permission (id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="20210216100000-account-table-structure-2" author="jordi.jaspers">
+        <ext:documentation>
+            adding basic permissions to the access level table
+        </ext:documentation>
+        <sql>
+            INSERT INTO permission (level)
+            VALUES ('ADMIN'),
+                   ('MODERATOR'),
+                   ('USER');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

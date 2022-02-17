@@ -48,7 +48,8 @@ public class Property {
 
     /**
      * The address of the property.
-     * JoinColumn is used to specify the name of the column in the table that is the foreign key for the relationship.
+     * <p>
+     * NOTE: JoinColumn is used to specify the name of the column in the table that is the foreign key for the relationship.
      */
     @Relation(value = Relation.Kind.ONE_TO_ONE, cascade = Relation.Cascade.ALL)
     private Address address;

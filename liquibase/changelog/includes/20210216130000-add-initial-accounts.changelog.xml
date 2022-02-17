@@ -1,0 +1,18 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="20210216130000-add-initial-accounts-1" author="jordi.jaspers">
+        <ext:documentation>
+            Setup the account database table for user authentication.
+        </ext:documentation>
+        <sql>
+            INSERT INTO account (name, last_name, email, password, permission_id)
+            VALUES ('Jordi', 'Jaspers', 'jjaspers@email.com', '9914e4aa9445fd9537ec59347d7477c74ef9de963dd180ab5854da02fcd49e4d',
+                    (SELECT id FROM permission where level = 'ADMIN')),
+                   ('Tony', 'Stark', 'tstark@email.com', '9914e4aa9445fd9537ec59347d7477c74ef9de963dd180ab5854da02fcd49e4d',
+                    (SELECT id FROM permission where level = 'USER'));
+        </sql>
+    </changeSet>
+</databaseChangeLog>

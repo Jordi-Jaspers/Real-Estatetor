@@ -71,7 +71,7 @@ public class TransactionIdFilter implements HttpServerFilter {
 
                         if (!serverResponse.getHeaders().contains(TX_ID_HEADER) || StringUtils.isBlank(
                                 serverResponse.getHeaders().get(TX_ID_HEADER))) {
-                            LOGGER.info("Set '{}' with value '{};.", TX_ID_HEADER, TransactionId.get());
+                            LOGGER.info("Set '{}' with value '{}'", TX_ID_HEADER, TransactionId.get());
                             serverResponse.header(TX_ID_HEADER, TransactionId.get());
                         }
 
