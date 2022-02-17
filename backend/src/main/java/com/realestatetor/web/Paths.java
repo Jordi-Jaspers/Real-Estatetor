@@ -10,7 +10,7 @@ public final class Paths {
     /**
      * The base part of all rest API paths.
      */
-    private static final String BASE_PATH = "/rest";
+    public static final String BASE_PATH = "/rest";
 
     /**
      * The path for property.

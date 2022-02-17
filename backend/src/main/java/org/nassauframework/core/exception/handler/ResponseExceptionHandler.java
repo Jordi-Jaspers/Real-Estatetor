@@ -25,7 +25,7 @@ public class ResponseExceptionHandler {
     /**
      * The enricher to fill the error responses with a decent body.
      */
-    final ResponseEnricher enricher;
+    private final ResponseEnricher enricher;
 
     /**
      * The default constructor.
@@ -42,14 +42,14 @@ public class ResponseExceptionHandler {
      * <p>
      * Each {@code HttpException} has an associated {@code HttpStatus} that is used as the response status.
      *
-     * @param ex      the exception
-     * @param request the current request
+     * @param exception the exception
+     * @param request   the current request
      * @return a response entity reflecting the current exception
      */
     @Error(exception = HttpException.class, global = true)
-    public MutableHttpResponse<Object> handleHttpException(final HttpRequest<?> request, final HttpException ex) {
-        final HttpStatus status = ex.getHttpStatus();
-        final Object body = buildErrorResponseBody(ex, status, request);
+    public MutableHttpResponse<Object> handleHttpException(final HttpRequest<?> request, final HttpException exception) {
+        final HttpStatus status = exception.getHttpStatus();
+        final Object body = buildErrorResponseBody(exception, status, request);
         return HttpResponse.status(status).body(body);
     }
 
@@ -58,14 +58,14 @@ public class ResponseExceptionHandler {
      * <p>
      * Each {@code ApiException} has an associated {@code HttpStatus} that is used as the response status.
      *
-     * @param ex      the exception
-     * @param request the current request
+     * @param exception the exception
+     * @param request   the current request
      * @return a response entity reflecting the current exception
      */
     @Error(exception = ApiException.class, global = true)
-    public MutableHttpResponse<Object> handleApiException(final HttpRequest<?> request, final ApiException ex) {
+    public MutableHttpResponse<Object> handleApiException(final HttpRequest<?> request, final ApiException exception) {
         final HttpStatus status = HttpStatus.BAD_REQUEST;
-        final Object body = buildErrorResponseBody(ex, status, request);
+        final Object body = buildErrorResponseBody(exception, status, request);
         return HttpResponse.status(status).body(body);
     }
 

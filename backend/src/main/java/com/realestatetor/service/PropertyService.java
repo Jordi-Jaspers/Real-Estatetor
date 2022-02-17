@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.nassauframework.core.logging.kibana.TxSupplier.withTxIdDo;
 
@@ -25,6 +26,11 @@ import static org.nassauframework.core.logging.kibana.TxSupplier.withTxIdDo;
 public class PropertyService {
 
     /**
+     * Default price value.
+     */
+    public static final String DEFAULT_PRICE = "0.00";
+
+    /**
      * The class logger.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(PropertyService.class);
@@ -35,7 +41,7 @@ public class PropertyService {
     private final PropertyRepository repository;
 
     @Inject
-    public PropertyService(PropertyRepository repository) {
+    public PropertyService(final PropertyRepository repository) {
         this.repository = repository;
     }
 
@@ -80,11 +86,11 @@ public class PropertyService {
      * @return the list of properties within the price range.
      */
     public Mono<List<Property>> getPropertyInPriceRange(final Double lowerBound, final Double upperBound) {
-        Flux<Property> result;
+        final Flux<Property> result;
 
-        if (upperBound != 0.00 && lowerBound > upperBound) {
+        if (!Objects.equals(upperBound, Double.parseDouble(DEFAULT_PRICE)) && lowerBound > upperBound) {
             throw new BadRequestException("Did you mean to set the minimum value greater then the maximum value?");
-        } else if (upperBound == 0.00) {
+        } else if (upperBound.equals(Double.parseDouble(DEFAULT_PRICE))) {
             LOGGER.info("No maximum price limit set.");
             result = repository.findByPriceAfter(lowerBound);
         } else {
@@ -107,7 +113,7 @@ public class PropertyService {
      * @param property the property in question.
      * @return The created property.
      */
-    public Mono<Property> createAdvertisement(Property property) {
+    public Mono<Property> createAdvertisement(final Property property) {
         LOGGER.info("Creating a new advertisement for property: {}", property.toString());
         return repository.save(property);
     }

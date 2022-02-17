@@ -29,6 +29,7 @@ public class HttpException extends NassauException {
      * Constructs a new {@code HttpException} with the supplied {@link HttpStatus}.
      */
     public HttpException(final HttpStatus httpStatus) {
+        super();
         this.httpStatus = requireNonNull(httpStatus);
     }
 

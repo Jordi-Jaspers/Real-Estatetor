@@ -9,7 +9,7 @@ import lombok.Data;
  * The account resource with specified user details.
  */
 @Data
-@MappedEntity(value = "permission")
+@MappedEntity("permission")
 public class Permission {
 
     /**

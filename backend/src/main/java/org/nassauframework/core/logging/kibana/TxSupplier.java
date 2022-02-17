@@ -16,6 +16,8 @@ import static org.nassauframework.core.logging.kibana.KibanaLogFieldNames.TX_ID;
 
 /**
  * Utility to wrap a Method with the appropriate transaction id values for logging.
+ *
+ * @author Jordi Jaspers
  */
 public final class TxSupplier {
 
@@ -25,10 +27,15 @@ public final class TxSupplier {
     private static final Logger LOGGER = LoggerFactory.getLogger(TxSupplier.class);
 
     /**
+     * Pass the transaction id to the given callable.
+     */
+    private static final String TRANSACTION_ID_LOGGING = "Wrapping method with transaction id: {}";
+
+    /**
      * The default constructor.
      */
     private TxSupplier() {
-        // Do nothing.
+        // Prevent instantiation.
     }
 
     /**
@@ -60,7 +67,7 @@ public final class TxSupplier {
      */
     public static <T> T withTxIdDo(final T object, final Object uuid) {
         try {
-            LOGGER.debug("Wrapping method with transaction id: {}", uuid);
+            LOGGER.debug(TRANSACTION_ID_LOGGING, uuid);
             if (uuid instanceof UUID) {
                 TransactionId.set((UUID) uuid);
             } else {
@@ -82,7 +89,7 @@ public final class TxSupplier {
     @SneakyThrows
     public static <T> T withTxIdDo(final Callable<T> method, final Object uuid) {
         try {
-            LOGGER.debug("Wrapping method with transaction id: {}", uuid);
+            LOGGER.debug(TRANSACTION_ID_LOGGING, uuid);
             if (uuid instanceof UUID) {
                 TransactionId.set((UUID) uuid);
             } else {

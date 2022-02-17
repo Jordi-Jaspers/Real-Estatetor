@@ -6,11 +6,13 @@ import java.util.UUID;
 
 /**
  * Saving the transaction id in a ThreadLocal in order to recall it whenever needed.
+ * <p>
+ * Note: Suppressing the warning because an AOP or advice classes may not be final classes.
  *
  * @author Jordi Jaspers
  */
 @ThreadLocal
-public class TransactionId {
+public abstract class TransactionId {
 
     /**
      * The thread local id.
@@ -37,5 +39,4 @@ public class TransactionId {
     public static void remove() {
         id = null;
     }
-
 }

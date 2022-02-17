@@ -1,7 +1,6 @@
 package com.realestatetor.repository;
 
 import com.realestatetor.model.entity.Account;
-import com.realestatetor.model.entity.Property;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.annotation.Join;
 import io.micronaut.data.model.query.builder.sql.Dialect;

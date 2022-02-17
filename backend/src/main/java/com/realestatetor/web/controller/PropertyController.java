@@ -15,6 +15,7 @@ import io.micronaut.security.annotation.Secured;
 import jakarta.inject.Inject;
 import reactor.core.publisher.Mono;
 
+import static com.realestatetor.service.PropertyService.DEFAULT_PRICE;
 import static com.realestatetor.web.Paths.PARAM_ID;
 import static com.realestatetor.web.Paths.PARAM_SEARCH;
 import static com.realestatetor.web.Paths.PROPERTY;
@@ -22,11 +23,6 @@ import static com.realestatetor.web.Paths.PROPERTY;
 @Secured("ADMIN")
 @Controller(PROPERTY)
 public class PropertyController {
-
-    /**
-     * Default price value.
-     */
-    private static final String DEFAULT_PRICE = "0.00";
 
     /**
      * The property service.
@@ -45,7 +41,7 @@ public class PropertyController {
      * @param mapper  The Bi-directional mapper for the Property entity.
      */
     @Inject
-    public PropertyController(PropertyService service, final PropertyMapper mapper) {
+    public PropertyController(final PropertyService service, final PropertyMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
@@ -64,8 +60,8 @@ public class PropertyController {
      */
     @Get(PARAM_ID)
     public Mono<MutableHttpResponse<?>> getProperty(final long id) {
-        return service.getProperty(id).
-                map(property -> HttpResponse.ok(mapper.toResourceObject(property)));
+        return service.getProperty(id)
+                .map(property -> HttpResponse.ok(mapper.toResourceObject(property)));
     }
 
     /**
@@ -73,8 +69,8 @@ public class PropertyController {
      */
     @Get(PARAM_SEARCH)
     public Mono<MutableHttpResponse<?>> getPropertyInPriceRange(
-            @QueryValue(defaultValue = DEFAULT_PRICE) Double min,
-            @QueryValue(defaultValue = DEFAULT_PRICE) Double max) {
+            @QueryValue(defaultValue = DEFAULT_PRICE) final Double min,
+            @QueryValue(defaultValue = DEFAULT_PRICE) final Double max) {
         return service.getPropertyInPriceRange(min, max)
                 .map(properties -> HttpResponse.ok(mapper.toResourceObjectList(properties)));
     }
@@ -83,7 +79,7 @@ public class PropertyController {
      * Create a new property.
      */
     @Post
-    public Mono<MutableHttpResponse<PropertyDto>> CreatePropertyAdvertisement(@NonNull @Body final PropertyDto propertyDto) {
+    public Mono<MutableHttpResponse<?>> createPropertyAdvertisement(@NonNull @Body final PropertyDto propertyDto) {
         return service.createAdvertisement(mapper.toDomainObject(propertyDto))
                 .map(property -> HttpResponse.created(mapper.toResourceObject(property)));
     }

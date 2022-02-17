@@ -19,7 +19,7 @@ public class NassauException extends RuntimeException {
      * Constructs a new {@code NassauException}.
      */
     public NassauException() {
-        // Empty constructor.
+        super();
     }
 
     /**

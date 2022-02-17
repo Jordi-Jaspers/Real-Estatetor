@@ -18,6 +18,13 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public final class KibanaLogFields {
 
     /**
+     * Private constructor.
+     */
+    private KibanaLogFields() {
+        // Prevent instantiation
+    }
+
+    /**
      * Sets the Kibana log field {@code field} to the {@code value}.
      */
     public static KibanaLogField tag(final KibanaLogField field, final Enum<?> value) {
@@ -50,7 +57,7 @@ public final class KibanaLogFields {
         if (values == null || values.isEmpty()) {
             return tag(field, (String) null);
         }
-        final String value = values.stream().map(s -> String.format("'%s'", s)).collect(Collectors.joining(", ", "[", "]"));
+        final String value = values.stream().map(string -> String.format("'%s'", string)).collect(Collectors.joining(", ", "[", "]"));
         return tag(field, value);
     }
 

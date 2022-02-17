@@ -2,9 +2,21 @@ package com.realestatetor;
 
 import io.micronaut.runtime.Micronaut;
 
-public class Application {
+/**
+ * The main Application class.
+ */
+public final class Application {
 
-    public static void main(String[] args) {
+    private Application() {
+        // Empty constructor
+    }
+
+    /**
+     * The main runnable method.
+     *
+     * @param args The arguments
+     */
+    public static void main(final String[] args) {
         Micronaut.run(Application.class, args);
     }
 }

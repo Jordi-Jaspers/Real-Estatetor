@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  * The account resource with specified user details.
  */
 @Data
-@MappedEntity(value = "account")
+@MappedEntity("account")
 public class Account {
 
     /**

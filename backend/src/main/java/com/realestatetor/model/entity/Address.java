@@ -9,7 +9,7 @@ import lombok.Data;
  * The address resource.
  */
 @Data
-@MappedEntity(value = "address")
+@MappedEntity("address")
 public class Address {
 
     /**

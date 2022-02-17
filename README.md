@@ -72,7 +72,7 @@ Created Route to @Endpoint io.micronaut.management.endpoint.routes.RoutesEndpoin
    1. Setup IDE config to gradle jdk 17-grl -> preferences -> build, execution, and deployment -> build tools -> gradle -> JDK
    2. Set project structure to jdk 17-grl
 4. CD to Liquibase project folder and run `./gradlew liquibase:update` to provision the database.
-5. CD to the `backend` folder and run `./gradlew build` to build the backend OR `./gradlew run` to run the backend.
+5. CD to the `backend` folder and run `./gradlew clean build` to build the backend OR `./gradlew run` to run the backend.
 6. Create a Native Image of the backend by using `./gradlew native-image`
 
 ## Notes <a name = "notes"></a>

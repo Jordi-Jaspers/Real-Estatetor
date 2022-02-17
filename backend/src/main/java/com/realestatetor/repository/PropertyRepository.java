@@ -22,12 +22,18 @@ public interface PropertyRepository extends ReactorCrudRepository<Property, Long
     // No need for extra methods here, Spring Data ReactiveMongoRepository will take care of it.
     // ReactiveMongoRepository also extends from CrudRepository, so we can use the standard CRUD methods or create custom ones.
     // example: Flux<Product> findByName(String name);
-    // Note: Say you query for Product instances, what happens is that by default Micronaut Data MongoDB will only query for and fetch the simple properties. In the case of single ended associations like the above Micronaut Data will only retrieve the ID and assign it if is possible (In the case of entities that require constructor arguments this is not even possible).
     //
-    // If you need to fetch the association too then you can use the @Join annotation on your repository interface to specify that the aggregation should be executed to with a lookup of the associated Manufacturer.
+    // Note:
+    // Say you query for Product instances, what happens is that by default Micronaut Data MongoDB will only query for and fetch the
+    // simple properties. In the case of single ended associations like the above Micronaut Data will only retrieve the ID and assign it
+    // if is possible (In the case of entities that require constructor arguments this is not even possible).
+    //
+    // If you need to fetch the association too then you can use the @Join annotation on your repository interface to specify that
+    // the aggregation should be executed to with a lookup of the associated Manufacturer.
 
     @NonNull
     @Join("address")
+    @Override
     Flux<Property> findAll();
 
     @NonNull

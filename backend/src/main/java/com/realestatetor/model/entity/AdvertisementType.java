@@ -8,9 +8,12 @@ public enum AdvertisementType {
     SALE("SALE"),
     RENT("RENT");
 
+    /**
+     * The value of the enumeration.
+     */
     private final String value;
 
-    AdvertisementType(String value) {
+    AdvertisementType(final String value) {
         this.value = value;
     }
 
@@ -18,8 +21,14 @@ public enum AdvertisementType {
         return value;
     }
 
-    public static AdvertisementType fromValue(String value) {
-        for (AdvertisementType type : AdvertisementType.values()) {
+    /**
+     * Returns the enum value from the given string.
+     *
+     * @param value the string value.
+     * @return the enum value.
+     */
+    public static AdvertisementType fromValue(final String value) {
+        for (final AdvertisementType type : AdvertisementType.values()) {
             if (type.getValue().equals(value)) {
                 return type;
             }

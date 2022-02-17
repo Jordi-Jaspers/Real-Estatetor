@@ -11,6 +11,7 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
+import io.micronaut.security.filters.SecurityFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.nassauframework.core.logging.kibana.KibanaLogFieldNames;
 import org.nassauframework.core.logging.kibana.KibanaLogFields;
@@ -36,6 +37,7 @@ import static org.nassauframework.core.logging.model.LoggingAttributes.TX_ID_HEA
  *
  * @author Jordi Jaspers
  */
+@SuppressWarnings({"MultipleStringLiterals", "PMD.PrematureDeclaration"})
 @Filter(Filter.MATCH_ALL_PATTERN)
 public class TransactionIdFilter implements HttpServerFilter {
 
@@ -44,20 +46,33 @@ public class TransactionIdFilter implements HttpServerFilter {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionIdFilter.class);
 
+    /**
+     * String Capacity.
+     */
+    private static final int CAPACITY = 64;
+
+    /**
+     * Adding transaction IDs to the response and request headers. Also, passing the transaction ID to the right thread
+     * so, it is added to the logger.
+     *
+     * @param request The request.
+     * @param chain   The filter chain.
+     * @return a MutableHttpResponse with the transaction ID added to the header.
+     */
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(final HttpRequest<?> request, final ServerFilterChain chain) {
         final UUID uuid = resolveHeader(request);
         final Publisher<MutableHttpResponse<?>> result;
 
         // If Micronaut Security rejected the request simpy do nothing
-        //if (request.getAttribute(SecurityFilter.REJECTION).isPresent()) {
-        //    LOGGER.info("Request was rejected by Micronaut Security");
-        //    return chain.proceed(request);
-        //}
+        if (request.getAttribute(SecurityFilter.REJECTION).isPresent()) {
+            LOGGER.info("Request was rejected by Micronaut Security");
+            return chain.proceed(request);
+        }
 
         try {
             result = Flux.from(chain.proceed(request))
-                    .doOnRequest(r -> {
+                    .doOnRequest(consumer -> {
                         TransactionId.set(uuid);
                         KibanaLogFields.tag(KibanaLogFieldNames.TX_ID, TransactionId.get());
 
@@ -115,7 +130,7 @@ public class TransactionIdFilter implements HttpServerFilter {
      *
      * @param request The request to log.
      */
-    private void logRequest(HttpRequest<?> request) {
+    private void logRequest(final HttpRequest<?> request) {
         // Declaring all the variables needed to log the request and response.
         final String path = request.getPath();
         final HttpMethod httpMethod = request.getMethod();
@@ -123,26 +138,26 @@ public class TransactionIdFilter implements HttpServerFilter {
         final Iterator<Map.Entry<String, List<String>>> requestHeaders = request.getHeaders().iterator();
 
         // Logging the request
-        final StringBuilder requestString = new StringBuilder();
+        final StringBuilder requestString = new StringBuilder(CAPACITY);
         requestString
                 .append("Request is: \n\n")
-                .append(httpMethod).append(" ")
+                .append(httpMethod).append(' ')
                 .append(path).append("\n\n");
 
         if (!request.getParameters().isEmpty()) {
             final HttpParameters parameters = request.getParameters();
             requestString.append("Request params: \n");
-            for (Map.Entry<String, List<String>> entry : parameters) {
-                requestString.append(entry.getKey()).append(" = ").append(entry.getValue()).append("\n");
+            for (final Map.Entry<String, List<String>> entry : parameters) {
+                requestString.append(entry.getKey()).append(" = ").append(entry.getValue()).append('\n');
             }
             requestString.append("\n\n");
         }
 
         while (requestHeaders.hasNext()) {
-            Map.Entry<String, List<String>> header = requestHeaders.next();
+            final Map.Entry<String, List<String>> header = requestHeaders.next();
             requestString
                     .append(header.getKey()).append(": ")
-                    .append(header.getValue()).append("\n");
+                    .append(header.getValue()).append('\n');
         }
         requestString.append("\nBody: ");
         requestBody.ifPresentOrElse(requestString::append, () -> requestString.append("{}"));
@@ -155,28 +170,27 @@ public class TransactionIdFilter implements HttpServerFilter {
      *
      * @param serverResponse The response to log.
      */
-    private void logResponse(MutableHttpResponse<?> serverResponse) {
+    private void logResponse(final MutableHttpResponse<?> serverResponse) {
         final Optional<?> optionalBody = serverResponse.getBody();
         final HttpStatus status = serverResponse.getStatus();
         final Iterator<Map.Entry<String, List<String>>> responseHeaders = serverResponse.getHeaders().iterator();
 
         // Logging the response.
-        final StringBuilder responseString = new StringBuilder();
+        final StringBuilder responseString = new StringBuilder(CAPACITY);
         responseString
                 .append("Response is - ")
                 .append(status.getCode())
-                .append(" ")
+                .append(' ')
                 .append(status)
-                .append("\n\n");
+                .append("\n\nHeaders: \n");
 
-        responseString.append("Headers: \n");
         while (responseHeaders.hasNext()) {
-            Map.Entry<String, List<String>> header = responseHeaders.next();
+            final Map.Entry<String, List<String>> header = responseHeaders.next();
             responseString
                     .append(header.getKey()).append(": ")
-                    .append(header.getValue()).append("\n");
+                    .append(header.getValue()).append('\n');
         }
-        responseString.append("\n");
+        responseString.append('\n');
 
         if (optionalBody.isPresent()) {
             final Object responseBody = optionalBody.get();
@@ -184,7 +198,7 @@ public class TransactionIdFilter implements HttpServerFilter {
             try {
                 responseString.append("Body: ").append(objectWriter.writeValueAsString(responseBody));
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                LOGGER.error("Could not serialize response body.", e);
             }
         } else {
             responseString.append("Body: {}");

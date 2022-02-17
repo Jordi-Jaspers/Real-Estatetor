@@ -3,6 +3,9 @@ package com.realestatetor.model.dto;
 import lombok.Data;
 import lombok.ToString;
 
+/**
+ * The resource representing a property.
+ */
 @Data
 @ToString
 public class PropertyDto {
