@@ -6,6 +6,7 @@ import com.realestatetor.rest.service.exceptions.NoPropertyFoundException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.nassauframework.core.exception.BadRequestException;
+import org.nassauframework.core.exception.SQLException;
 import org.nassauframework.core.logging.model.TransactionId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,6 +116,9 @@ public class PropertyService {
      */
     public Mono<Property> createAdvertisement(final Property property) {
         LOGGER.info("Creating a new advertisement for property: {}", property.toString());
-        return repository.save(property);
+        return repository.save(property)
+                .onErrorMap(exception -> {
+                    throw new SQLException("Something went wrong while saving the property.", exception);
+                });
     }
 }

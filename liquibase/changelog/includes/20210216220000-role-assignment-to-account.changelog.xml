@@ -1,0 +1,44 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="20210216220000-role-assignment-to-account-1" author="jordi.jaspers">
+        <ext:documentation>
+            Create initial lookup tables for the roles assigned to accounts.
+        </ext:documentation>
+        <sql>
+            CREATE TABLE assigned_role
+            (
+                id         SERIAL PRIMARY KEY,
+                account_id INTEGER NOT NULL,
+                CONSTRAINT "fk_assigned_role_account"
+                    FOREIGN KEY (account_id)
+                        REFERENCES account (id),
+                role_id    INTEGER NOT NULL,
+                CONSTRAINT "fk_assigned_role_role"
+                    FOREIGN KEY (role_id)
+                        REFERENCES role (id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="20210216220000-role-assignment-to-account-2" author="jordi.jaspers">
+        <ext:documentation>
+            Provision the account with the role(s).
+        </ext:documentation>
+        <sql>
+            INSERT INTO assigned_role (account_id, role_id)
+            VALUES ((SELECT id FROM account WHERE email = 'jjaspers@ilionx.com'),
+                    (SELECT id FROM "role" WHERE level = 'ADMIN')),
+
+                   ((SELECT id FROM account WHERE email = 'jjaspers@ilionx.com'),
+                    (SELECT id FROM "role" WHERE level = 'PERMISSION_ADMIN')),
+
+                   ((SELECT id FROM account WHERE email = 'tstark@starkindustries.org'),
+                    (SELECT id FROM "role" WHERE level = 'PERMISSION_ADMIN')),
+
+                   ((SELECT id FROM account WHERE email = 'cevans@captain.us'),
+                    (SELECT id FROM "role" WHERE level = 'PERMISSION_ADMIN'));
+        </sql>
+    </changeSet>
+</databaseChangeLog>

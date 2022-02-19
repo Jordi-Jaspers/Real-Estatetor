@@ -16,11 +16,7 @@
                 email      VARCHAR(255) NOT NULL,
                 password   VARCHAR(255) NOT NULL,
                 salt       VARCHAR(15)  NOT NULL,
-                role_id    INTEGER      NOT NULL,
-                created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                CONSTRAINT fk_account_permission
-                    FOREIGN KEY (role_id)
-                        REFERENCES "role" (id)
+                created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
         </sql>
     </changeSet>

@@ -44,11 +44,13 @@
             VALUES ('write_account', 'Allows to alter/create accounts'),
                    ('read_account', 'Allows to lookup accounts'),
                    ('read_property', 'Allows to alter/create new listings of properties'),
-                   ('write_property', 'Allows to lookup and check new listings of properties');
+                   ('write_property', 'Allows to lookup and check new listings of properties'),
+                   ('write_permission', 'Allows to alter/create permissions');
 
             INSERT INTO "role" (level)
             VALUES ('ADMIN'),
                    ('MODERATOR'),
+                   ('PERMISSION_ADMIN'),
                    ('USER');
 
             INSERT INTO "assigned_permission" (role_id, permission_id)
@@ -59,6 +61,7 @@
                    ((SELECT id FROM "role" WHERE level = 'MODERATOR'), (SELECT id FROM permission WHERE name = 'write_property')),
                    ((SELECT id FROM "role" WHERE level = 'MODERATOR'), (SELECT id FROM permission WHERE name = 'read_account')),
                    ((SELECT id FROM "role" WHERE level = 'MODERATOR'), (SELECT id FROM permission WHERE name = 'read_property')),
+                   ((SELECT id FROM "role" WHERE level = 'PERMISSION_ADMIN'), (SELECT id FROM permission WHERE name = 'write_permission')),
                    ((SELECT id FROM "role" WHERE level = 'USER'), (SELECT id FROM permission WHERE name = 'read_property'));
         </sql>
     </changeSet>

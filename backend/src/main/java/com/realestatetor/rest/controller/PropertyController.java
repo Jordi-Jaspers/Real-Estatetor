@@ -15,12 +15,14 @@ import io.micronaut.security.annotation.Secured;
 import jakarta.inject.Inject;
 import reactor.core.publisher.Mono;
 
-import static com.realestatetor.rest.service.PropertyService.DEFAULT_PRICE;
 import static com.realestatetor.rest.Paths.PARAM_ID;
 import static com.realestatetor.rest.Paths.PARAM_SEARCH;
 import static com.realestatetor.rest.Paths.PROPERTY;
+import static com.realestatetor.rest.service.PropertyService.DEFAULT_PRICE;
+import static org.nassauframework.core.security.model.entity.PermissionLevel.READ_PROPERTY;
+import static org.nassauframework.core.security.model.entity.PermissionLevel.WRITE_PROPERTY;
 
-@Secured("USER")
+@Secured(READ_PROPERTY)
 @Controller(PROPERTY)
 public class PropertyController {
 
@@ -78,6 +80,7 @@ public class PropertyController {
     /**
      * Create a new property.
      */
+    @Secured(WRITE_PROPERTY)
     @Post
     public Mono<MutableHttpResponse<?>> createPropertyAdvertisement(@NonNull @Body final PropertyDto propertyDto) {
         return service.createAdvertisement(mapper.toDomainObject(propertyDto))

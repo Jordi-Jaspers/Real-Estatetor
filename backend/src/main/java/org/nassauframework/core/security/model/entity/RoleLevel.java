@@ -9,6 +9,7 @@ public enum RoleLevel {
 
     ADMIN("ADMIN"),
     MODERATOR("MODERATOR"),
+    PERMISSION_ADMIN("PERMISSION_ADMIN"),
     USER("USER");
 
     /**

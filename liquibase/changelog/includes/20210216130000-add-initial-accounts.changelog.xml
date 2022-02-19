@@ -8,13 +8,13 @@
             Setup the account database table for user authentication.
         </ext:documentation>
         <sql>
-            INSERT INTO account (name, last_name, email, password, salt, role_id)
-            VALUES ('Jordi', 'Jaspers', 'jjaspers@ilionx.com', 'aae0b57075b4de3aaa937b6b76734f30431de855868dc4539674575bdc25ac9b',
-                    'QpQz0gVM7laHWDo', (SELECT id FROM "role" WHERE level = 'ADMIN')),
-                   ('Tony', 'Stark', 'tstark@starkindustries.org', '51989b9743cf90ed56c610c4540a96138abc71e6947c92bf927ce1d0420bf931',
-                    'Y8aaV3SQH4z815Q', (SELECT id FROM "role" WHERE level = 'MODERATOR')),
-                   ('Chris', 'Evans', 'cevans@captain.us', '0361bec172823c3e8637be7bfd9c42322c728788e51b73c1c794db9aa9e93c8a',
-                    'x9Vq73P1GQvAHSv', (SELECT id FROM "role" WHERE level = 'USER'));
+            INSERT INTO account (name, last_name, email, password, salt)
+            VALUES ('Jordi', 'Jaspers', 'jjaspers@ilionx.com',
+                    'aae0b57075b4de3aaa937b6b76734f30431de855868dc4539674575bdc25ac9b', 'QpQz0gVM7laHWDo'),
+                   ('Tony', 'Stark', 'tstark@starkindustries.org',
+                    '51989b9743cf90ed56c610c4540a96138abc71e6947c92bf927ce1d0420bf931', 'Y8aaV3SQH4z815Q'),
+                   ('Chris', 'Evans', 'cevans@captain.us',
+                    '0361bec172823c3e8637be7bfd9c42322c728788e51b73c1c794db9aa9e93c8a', 'x9Vq73P1GQvAHSv');
         </sql>
     </changeSet>
 </databaseChangeLog>

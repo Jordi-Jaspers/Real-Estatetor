@@ -8,10 +8,13 @@ import io.micronaut.security.authentication.AuthenticationResponse;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.nassauframework.core.exception.IllegalStateException;
 import org.nassauframework.core.security.model.entity.Account;
+import org.nassauframework.core.security.model.entity.AssignedRole;
 import org.nassauframework.core.security.model.entity.Role;
 import org.nassauframework.core.security.repository.AccountRepository;
 import org.nassauframework.core.security.repository.AssignedPermissionRepository;
+import org.nassauframework.core.security.repository.AssignedRoleRepository;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +26,11 @@ import java.util.List;
 import static java.util.Objects.nonNull;
 
 /**
- * A Basic username/password authentication provider.
+ * A Basic username/password authentication provider, that uses the {@link AccountRepository} to authenticate the user that tries to login.
+ * Afterwards, the {@link AssignedRoleRepository} is used to retrieve the assigned roles for the user, and it retrieves the
+ * assigned permissions for the roles of that {@link Account}. The returned Bearer token will determine what the user is allowed to do.
+ *
+ * @author Jordi Jaspers
  */
 @Singleton
 public class UsernamePasswordAuthenticator implements AuthenticationProvider {
@@ -40,10 +47,17 @@ public class UsernamePasswordAuthenticator implements AuthenticationProvider {
     private AccountRepository accountRepository;
 
     /**
-     * The permission repository.
+     * The permission lookup repository.
      */
     @Inject
     private AssignedPermissionRepository assignedPermissionRepository;
+
+    /**
+     * The role lookup repository.
+     */
+    @Inject
+    private AssignedRoleRepository assignedRoleRepository;
+
 
     /**
      * Authenticates a user with the given request. If a successful authentication is
@@ -66,7 +80,7 @@ public class UsernamePasswordAuthenticator implements AuthenticationProvider {
 
             final Account account = accountRepository.findByEmail(email).block();
             if (nonNull(account) && isValidPassword(account, password)) {
-                emitter.next(AuthenticationResponse.success(account.getEmail(), getPermissions(account.getRole())));
+                emitter.next(AuthenticationResponse.success(account.getEmail(), getPermissions(account)));
                 emitter.complete();
             } else {
                 LOGGER.info("Check if you correctly filled in the username or password.", AuthenticationResponse.exception());
@@ -89,12 +103,19 @@ public class UsernamePasswordAuthenticator implements AuthenticationProvider {
     /**
      * Gets the permissions for the given role.
      *
-     * @param role The role
+     * @param account the account
      * @return The permissions
      */
-    private List<String> getPermissions(final Role role) {
-        return assignedPermissionRepository.findByRole(role)
-                .map(assignedPermission -> assignedPermission.getPermission().getName())
+    private List<String> getPermissions(final Account account) {
+        final List<Role> roles = assignedRoleRepository.findByAccount(account)
+                .map(AssignedRole::getRole)
                 .collectList().block();
+        if (nonNull(roles)) {
+            return assignedPermissionRepository.findByRoleInList(roles)
+                    .map(assignedPermission -> assignedPermission.getPermission().getName())
+                    .collectList().block();
+        }
+
+        throw new IllegalStateException("No roles found for account " + account.getEmail());
     }
 }

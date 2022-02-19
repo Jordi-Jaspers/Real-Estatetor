@@ -4,12 +4,10 @@ import io.micronaut.data.annotation.DateCreated;
 import io.micronaut.data.annotation.GeneratedValue;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
-import io.micronaut.data.annotation.Relation;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
 import java.sql.Timestamp;
-import java.util.Set;
 
 /**
  * The account resource with specified user details.
@@ -52,12 +50,6 @@ public class Account {
      * The salt added to the password.
      */
     private String salt;
-
-    /**
-     * The permission level of the user.
-     */
-    @Relation(Relation.Kind.MANY_TO_MANY)
-    private Set<Role> role;
 
     /**
      * The timestamp of the creation of the property listing.
