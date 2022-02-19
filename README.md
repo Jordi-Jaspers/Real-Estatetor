@@ -21,6 +21,7 @@ Jordi Jaspers [[Github](https://github.com/Jordi-Jaspers "Github Page"), [Linked
 
 ## 📝 Table of Contents
 - [Application](#application)
+- [To-Do](#to-do)
 - [Set-Up](#setup)
 - [Notes](#notes)
 - [Stack](#stack)
@@ -74,6 +75,9 @@ Created Route to @Endpoint io.micronaut.management.endpoint.routes.RoutesEndpoin
 4. CD to Liquibase project folder and run `./gradlew liquibase:update` to provision the database.
 5. CD to the `backend` folder and run `./gradlew clean build` to build the backend OR `./gradlew run` to run the backend.
 6. Create a Native Image of the backend by using `./gradlew native-image`
+
+## To-Do <a name = "todo"></a>
+ Try and provision the data with <https://www.kaggle.com/juangesino/netherlands-rent-properties?select=properties.json>
 
 ## Notes <a name = "notes"></a>
 
@@ -148,3 +152,4 @@ In spring boot application we usually used "Hawaii Framework" to have proper exc
 * Heroicons (icon resource): <https://heroicons.com/>
 * Unsplash (image Resource): <https://unsplash.com/>
 * Micronaut R2DBC guide: <https://micronaut-projects.github.io/micronaut-r2dbc/1.0.x/guide/>
+* Data Provider: <https://www.kaggle.com/juangesino/netherlands-rent-properties?select=properties.json>

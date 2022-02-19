@@ -1,0 +1,65 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="20210216110000-roles-and-permissions-1" author="jordi.jaspers">
+        <ext:documentation>
+            Setup the roles and permissions for the account database table.
+        </ext:documentation>
+        <sql>
+            CREATE TABLE permission
+            (
+                id          SERIAL PRIMARY KEY,
+                name        VARCHAR(255) NOT NULL,
+                description VARCHAR(255) NOT NULL
+            );
+
+            CREATE TABLE "role"
+            (
+                id    SERIAL PRIMARY KEY,
+                level VARCHAR(255) NOT NULL
+            );
+
+            CREATE TABLE assigned_permission
+            (
+                id            SERIAL PRIMARY KEY,
+                role_id       INTEGER NOT NULL,
+                CONSTRAINT "fk_assigned_permission_role"
+                    FOREIGN KEY (role_id)
+                        REFERENCES role (id),
+                permission_id INTEGER NOT NULL,
+                CONSTRAINT "fk_assigned_permission_permission"
+                    FOREIGN KEY (permission_id)
+                        REFERENCES permission (id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="20210216110000-roles-and-permissions-2" author="jordi.jaspers">
+        <ext:documentation>
+            adding basic roles with their respective permissions.
+        </ext:documentation>
+        <sql>
+            INSERT INTO permission (name, description)
+            VALUES ('write_account', 'Allows to alter/create accounts'),
+                   ('read_account', 'Allows to lookup accounts'),
+                   ('read_property', 'Allows to alter/create new listings of properties'),
+                   ('write_property', 'Allows to lookup and check new listings of properties');
+
+            INSERT INTO "role" (level)
+            VALUES ('ADMIN'),
+                   ('MODERATOR'),
+                   ('USER');
+
+            INSERT INTO "assigned_permission" (role_id, permission_id)
+            VALUES ((SELECT id FROM "role" WHERE level = 'ADMIN'), (SELECT id FROM permission WHERE name = 'write_account')),
+                   ((SELECT id FROM "role" WHERE level = 'ADMIN'), (SELECT id FROM permission WHERE name = 'read_account')),
+                   ((SELECT id FROM "role" WHERE level = 'ADMIN'), (SELECT id FROM permission WHERE name = 'read_property')),
+                   ((SELECT id FROM "role" WHERE level = 'ADMIN'), (SELECT id FROM permission WHERE name = 'write_property')),
+                   ((SELECT id FROM "role" WHERE level = 'MODERATOR'), (SELECT id FROM permission WHERE name = 'write_property')),
+                   ((SELECT id FROM "role" WHERE level = 'MODERATOR'), (SELECT id FROM permission WHERE name = 'read_account')),
+                   ((SELECT id FROM "role" WHERE level = 'MODERATOR'), (SELECT id FROM permission WHERE name = 'read_property')),
+                   ((SELECT id FROM "role" WHERE level = 'USER'), (SELECT id FROM permission WHERE name = 'read_property'));
+        </sql>
+    </changeSet>
+</databaseChangeLog>

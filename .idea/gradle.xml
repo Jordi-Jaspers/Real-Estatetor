@@ -8,6 +8,7 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/backend" />
+        <option name="gradleJvm" value="JDK 17 - GraalVM" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/backend" />
@@ -15,8 +16,11 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="true" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/liquibase" />
+        <option name="gradleJvm" value="JDK 17 - GraalVM" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/liquibase" />
